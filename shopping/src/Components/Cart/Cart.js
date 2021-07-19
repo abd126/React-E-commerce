@@ -1,20 +1,22 @@
 import React from 'react';
 import './style.css';
 import { useSelector, useDispatch } from 'react-redux';
+import { BsReverseBackspaceReverse ,BsDash, BsPlus } from "react-icons/bs";
+
 
 
 function Cart() {
 
-    const { products } = useSelector(state => state.CartReducer);
-
+    const { products, totalPrice, totalQuantity } = useSelector(state => state.CartReducer);
+    const dispatch = useDispatch();
     return (
         <div className="cart">
-            <div className="container-fluid">
-                <h3>Your Shopping Cart</h3>
+            <div className="container">
+                <h3>Your cart</h3>
                 {products.length > 0 ? <>
                     <div className="row">
                         <div className="col-9">
-                            <div className="cart-heading">
+                            <div className="cart__heading">
                                 <div className="row">
                                     <div className="col-2">Picture</div>
                                     <div className="col-2">Name</div>
@@ -24,73 +26,77 @@ function Cart() {
                                     <div className="col-2">Remove</div>
                                 </div>
                             </div>
-
-                        </div>
-
-
-                        {products.map(product => (
-                            <div className="row" key={product.id}>
-                                <div className="">
-                                    <div className="row">
+                            {products.map(product => (
+                                <div className="row verticalAlign" key={product.id}>
                                     <div className="col-2">
-                                        <div className="cart-img">
-                                            <img src={`/images/${product.image}`} />
+                                        <div className="cart__image">
+                                            <img src={`/images/${product.image}`} alt="" />
                                         </div>
                                     </div>
-
                                     <div className="col-2">
-                                        <div className="cart-name">
+                                        <div className="cart__name">
                                             {product.name}
                                         </div>
                                     </div>
-
                                     <div className="col-2">
-                                        <div className="cart-price">
-                                            {product.price}
-                                        </div>
-
+                                        {product.price}
                                     </div>
-
                                     <div className="col-2">
-                                        <div className="inc-dec">
-                                            <button className="dec">-</button>
-                                            <span className="quantity">{product.quantity}</span>
-                                            <button className="inc">+</button>
-
+                                        <div className="details__info cart__incDec">
+                                            <div className="details__incDec">
+                                                <span className="dec" onClick={() => dispatch({ type: 'DEC', payload: product.id })}>
+                                                    <BsDash />
+                                                    </span>
+                                                <span className="quantity">{product.quantity}</span>
+                                                <span className="inc" onClick={() => dispatch({ type: 'INC', payload: product.id })}>
+                                                    <BsPlus />
+                                                    </span>
+                                            </div>
                                         </div>
                                     </div>
-
                                     <div className="col-2">
-                                        <div className="cart-TotalPrice">
+                                        <div className="cart__total text-center">
                                             {product.price * product.quantity}
                                         </div>
-
                                     </div>
-
                                     <div className="col-2">
-                                        <div className="cart-remove">
-                                            Remove
-                                    </div>
-
-                                    </div>
+                                        <div className="cart__remove" onClick={() => dispatch({ type: 'REMOVE', payload: product.id })}>
+                                            <BsReverseBackspaceReverse />
+                                        </div>
                                     </div>
                                 </div>
-                                
+                            ))}
+                        </div>
+                        <div className="col-3 summary-col">
+                            <div className="summary">
+                                <div className="summary__heading">
+                                    Summary
+                                </div>
+                                <div className="summary__details">
+                                    <div className="row mb-10">
+                                        <div className="col-6">
+                                            Total Items:
+                                        </div>
+                                        <div className="col-6">{totalQuantity}</div>
+                                    </div>
+                                    <div className="row mb-10">
+                                        <div className="col-6">
+                                            Total Price
+                                        </div>
+                                        <div className="col-6">
+                                            {totalPrice}
+                                        </div>
 
-
-
+                                    </div>
+                                    <button type="button" className="checkout">Checkout</button>
+                                </div>
                             </div>
-                        ))}
-
-
-                        <div className="col-3">Summry</div>
-
-
+                        </div>
                     </div>
-                </> : 'Your Shopping Cart is Empty'}
-
+                </> : 'Your cart is empty!'}
             </div>
         </div>
+
     )
 }
 
