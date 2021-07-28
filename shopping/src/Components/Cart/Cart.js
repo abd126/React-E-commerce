@@ -1,5 +1,6 @@
 import React from 'react';
 import './style.css';
+import Nav from '../Navbar/nav'
 import { useSelector, useDispatch } from 'react-redux';
 import { BsReverseBackspaceReverse ,BsDash, BsPlus } from "react-icons/bs";
 
@@ -11,6 +12,7 @@ function Cart() {
     const dispatch = useDispatch();
     return (
         <div className="cart">
+            <Nav />
             <div className="container">
                 <h3>Your cart</h3>
                 {products.length > 0 ? <>

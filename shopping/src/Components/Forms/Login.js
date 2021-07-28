@@ -1,34 +1,29 @@
-import userEvent from '@testing-library/user-event';
 import React, {useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import firebase from '../../Config/firebase/firebase';
 
-
-export default function SignupPage() {
+function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const history = useHistory();
-    const handleSubmit = (event) =>{
+    const  handleSubmit = (event) =>{
       event.preventDefault()
-      console.log(email,password);
+        
       // Firebase
-      firebase.auth().createUserWithEmailAndPassword(email,password)
-      .then(()=>{
-        alert("User Created")
-         history.push('/Login')
-
-        //  let create_user = {
-        //    name:user.displayName
-        //  }
+      firebase.auth().signInWithEmailAndPassword(email,password)
+      .then((userCredential)=>{
+        var user = userCredential.user;
+        console.log(user)
+        alert("Login Successfully")
+        history.push('/')
       }).catch(()=>{
         alert("Error Occured or user not created")
       })
-     
     }
-
     return (
         <div>
-      <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
+                <h1>Login</h1>
         <div className="mb-3">
           <label htmlFor="exampleInputEmail1" className="form-label">
             Email address
@@ -59,7 +54,8 @@ export default function SignupPage() {
           Signup
         </button>
       </form>
-    </div>
- 
+        </div>
     )
 }
+
+export default Login

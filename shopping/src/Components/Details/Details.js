@@ -1,5 +1,6 @@
 import React , {useEffect , useState} from 'react';
 import {useParams} from 'react-router-dom';
+import Nav from '../Navbar/nav'
 import {useSeletor , useDispatch, useSelector} from 'react-redux';
 import './style.css';
 import {BsDash, BsPlus} from "react-icons/bs";
@@ -25,6 +26,7 @@ function Details() {
     }
     return (
         <div className="container">
+            <Nav />
             <div className="row">
                 <div className="col-6  mt-100">
                     <div className="details-img">
